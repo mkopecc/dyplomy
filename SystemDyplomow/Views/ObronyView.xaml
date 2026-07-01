@@ -1,0 +1,65 @@
+<UserControl x:Class="SystemDyplomow.Views.ObronyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:SystemDyplomow.ViewModels">
+    <UserControl.DataContext>
+        <vm:ObronyViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Lista obron -->
+        <DataGrid Grid.Row="0" ItemsSource="{Binding Obrony}"
+                  AutoGenerateColumns="False" IsReadOnly="True"
+                  Style="{StaticResource DataGridStyle}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"           Binding="{Binding ObronaId}"   Width="45"/>
+                <DataGridTextColumn Header="Tytuł pracy"  Binding="{Binding TytulPracy}" Width="*"/>
+                <DataGridTextColumn Header="Data obrony"  Binding="{Binding DataObrony, StringFormat=d}" Width="110"/>
+                <DataGridTextColumn Header="Sala"         Binding="{Binding Sala}"        Width="80"/>
+                <DataGridTextColumn Header="Wynik"        Binding="{Binding WynikKoncowy}" Width="70"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Formularz -->
+        <GroupBox Grid.Row="1" Header="Zarejestruj obronę" Margin="0,10,0,0" Style="{StaticResource GroupBoxStyle}">
+            <Grid Margin="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Praca (zatwierdzona):" Margin="0,4,8,4" VerticalAlignment="Center"/>
+                <ComboBox  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,4,0,4"
+                           ItemsSource="{Binding PraceDoObrony}" DisplayMemberPath="Tytul"
+                           SelectedItem="{Binding SelectedPraca}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Data obrony:" Margin="0,4,8,4" VerticalAlignment="Center"/>
+                <DatePicker Grid.Row="1" Grid.Column="1" Margin="0,4,16,4"
+                            SelectedDate="{Binding DataObrony}"/>
+
+                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Margin="0,4,12,4">
+                    <TextBlock Text="Sala:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <TextBox Width="80" Text="{Binding Sala, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" Margin="0,4,0,4">
+                    <TextBlock Text="Wynik:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <ComboBox Width="70" ItemsSource="{Binding DostepneOceny}" SelectedItem="{Binding Wynik}" Margin="0,0,12,0"/>
+                    <Button Content="Zarejestruj" Command="{Binding DodajCommand}"
+                            Style="{StaticResource BtnPrimary}"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>
