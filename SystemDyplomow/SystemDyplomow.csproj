@@ -19,4 +19,9 @@
     <Resource Include="Resources\logo.ico"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Kopiuj plik konfiguracji do folderu wyjściowego -->
+    <None Include="dyplomy.cfg" CopyToOutputDirectory="PreserveNewest"/>
+  </ItemGroup>
+
 </Project>
